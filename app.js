@@ -4,22 +4,38 @@
 //   res.writeHead(200, {'Content-Type': 'text/html'});
 //   res.end('Hello World!');
 // }).listen(8080); 
-walkSound = new Audio('woop.wav');
-hurtSound = new Audio('hurt.wav');
+const walkSound = new Audio('woop.wav');
+const hurtSound = new Audio('hurt.wav');
+const gameOverSound = new Audio('game_over.wav');
+const music = new Audio('game_music.wav');
+const win_music = new Audio('game_victory.wav');
+const coin_sound = new Audio('coin.wav');
 x = 0;
 y = 0;
 hp=3;
 gbx = 256;
 gby = 256;
-speed = 64;
+const sprite_size = 64;
+const room_width = 832;
+const room_height = 640;
+coin_num = 5
+coinx = 384;
+coiny = 384;
+const speed = 64;
 ticker = 0;
-fps = 95;
+const fps = 95;
 moves = 1;
 moveIntent="none";
 // runSpeed = 3;
 map = document.querySelector(".map");
 character = document.querySelector(".blue-slime");
 goblin = document.querySelector(".goblin");
+coin = document.querySelector(".coin");
+hearts = document.querySelectorAll(".heart");
+menu = document.querySelector(".menu");
+
+
+coin.style.transform = `translate3d( ${coinx}px,${coiny}px,0)`;
 
 goblin.style.transform = `translate3d( ${gbx}px,${gby}px,0)`;
 
@@ -50,8 +66,10 @@ window.addEventListener("keyup", e => {
 });
 
 function moveEverything(){
-  rand = Math.random();
-  if(Math.random() < .1) {
+  //move gobs many times
+  for(var i =0; i < 7;i++){  
+    rand = Math.random();
+    if(Math.random() < .1) {
     //do nothing 
   }else if(rand < .25){
     gbx-=speed;
@@ -75,10 +93,13 @@ function moveEverything(){
     hp-=1;
     console.log(hp);
   }
+  }
+
 
 }
 
 function gameLoop(){ 
+  music.play()
   if(moves>0){
     if(moveIntent!="none"){
       switch(moveIntent){
@@ -90,7 +111,7 @@ function gameLoop(){
   
     if(x < 0) x = 0;
     if(y < 0) y = 0;
-    if(x > (832-64)) x = 832-64;
+    if(x > (room_width-sprite_size)) x = 832-64;
     if(y > (640-64)) y = 640-64;
     
     walkSound.play()
@@ -109,5 +130,42 @@ function gameLoop(){
       ticker = 0;
     }
   }
+
+  //win condition check
+  if(x == coinx && y == coiny){
+    clearInterval(tick);
+    coin_sound.play()
+    music.pause();
+    win_music.play();
+    if(confirm("YOU WIN!!! \n\n wanna play again?")){
+      location.reload();
+    } else {
+      //display credits
+      location.replace("credits.html");
+    }
+  }
+
+  //lose condition check
+  if(hp == 2){  
+    hearts[2].style.display = "none";
+  } else if (hp == 1){
+    hearts[2].style.display = "none";
+    hearts[1].style.display = "none";
+  }
+  else if(hp<=0){
+    hearts[2].style.display = "none";
+    hearts[1].style.display = "none";
+    hearts[0].style.display = "none";
+    music.pause();
+    gameOverSound.play();
+    clearInterval(tick);
+    if(confirm("YOU LOSE... \n\n try again?")){
+      location.reload();
+    } else {
+      //display credits
+      location.replace("credits.html");
+    }
+  }
 }
-setInterval(function(){gameLoop()},1000/fps);
+
+tick = setInterval(function(){gameLoop()},1000/fps);

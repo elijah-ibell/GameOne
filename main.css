@@ -19,6 +19,9 @@ body{
     height:640px;
     width:832px;
     background-color: rgb(145, 145, 145);
+    text-align: center;
+    vertical-align: middle;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 }
 
 .blue-slime{
@@ -56,4 +59,20 @@ body{
     transition:transform .3s;
     position: fixed;
     z-index:1;
+}
+
+.heart{
+    height:64px;
+    width:64px;
+    background-size:32px, 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("heart.png");
+    display:inline-block;
+}
+
+.menu{
+    height:64px;
+    width:auto;
+    background-color: rgb(72, 153, 228);
 }
