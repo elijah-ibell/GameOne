@@ -18,7 +18,7 @@ body{
 .map{
     height:640px;
     width:832px;
-    background-color: forestgreen;
+    background-color: rgb(145, 145, 145);
 }
 
 .blue-slime{
@@ -28,4 +28,32 @@ body{
     background-image: url("blue-slime.png");
     transform:none;
     transition:transform .3s;
+    position: fixed;
+    z-index:0;
+}
+
+.coin{
+    height:64px;
+    width:64px;
+    background-size:32px, 32px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("coin.png");
+    transform:none;
+    transition:transform .3s;
+    position: fixed;
+    z-index:1;
+}
+
+.goblin{
+    height:64px;
+    width:64px;
+    background-size:64px, 64px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-image: url("goblin.png");
+    transform:none;
+    transition:transform .3s;
+    position: fixed;
+    z-index:1;
 }
