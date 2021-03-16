@@ -1,0 +1,1 @@
+- update movement to an array that checks last pressed down arrow key
