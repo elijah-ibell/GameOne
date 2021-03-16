@@ -9,8 +9,8 @@ hurtSound = new Audio('hurt.wav');
 x = 0;
 y = 0;
 hp=3;
-gbx = 0;
-gby = 0;
+gbx = 256;
+gby = 256;
 speed = 64;
 ticker = 0;
 fps = 95;
@@ -20,6 +20,9 @@ moveIntent="none";
 map = document.querySelector(".map");
 character = document.querySelector(".blue-slime");
 goblin = document.querySelector(".goblin");
+
+goblin.style.transform = `translate3d( ${gbx}px,${gby}px,0)`;
+
 
 window.addEventListener("keydown", e => {
   switch(e.key){
@@ -48,7 +51,7 @@ window.addEventListener("keyup", e => {
 
 function moveEverything(){
   rand = Math.random();
-  if(Math.random() > .5) {
+  if(Math.random() < .1) {
     //do nothing 
   }else if(rand < .25){
     gbx-=speed;
